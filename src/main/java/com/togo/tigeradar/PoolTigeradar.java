@@ -1,11 +1,11 @@
 package com.togo.tigeradar;
 
-import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 public class PoolTigeradar extends AbstractTigeradar {
 
 	@Override
-	HttpClient getHttpClient() {
+	CloseableHttpClient getHttpClient() {
 		// TODO Auto-generated method stub
 		return null;
 	}

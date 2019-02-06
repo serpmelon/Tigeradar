@@ -11,12 +11,12 @@ import java.util.Map;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 
 	private Logger logger = LoggerFactory.getLogger(AbstractTigeradar.class);
 
-	abstract HttpClient getHttpClient();
+	abstract CloseableHttpClient getHttpClient();
 
 	@Override
 	public HttpResponse get(String url) {
@@ -65,7 +65,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	}
 
 	@Override
-	public HttpResponse post(String url) {
+	public CloseableHttpResponse post(String url) {
 
 		HttpPost httpPost = new HttpPost(url);
 
@@ -73,7 +73,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	}
 
 	@Override
-	public HttpResponse post(String url, List<NameValuePair> params) {
+	public CloseableHttpResponse post(String url, List<NameValuePair> params) {
 		HttpPost httpPost = new HttpPost(url);// 创建httpPost
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
@@ -84,7 +84,8 @@ public abstract class AbstractTigeradar implements Tigeradar {
 		return doPost(httpPost);
 	}
 
-	public HttpResponse post(String url, Map<String, String> params) {
+	@Override
+	public CloseableHttpResponse post(String url, Map<String, String> params) {
 
 		// 创建参数队列
 		List<NameValuePair> nameValuePairs = new ArrayList<>();
@@ -98,26 +99,36 @@ public abstract class AbstractTigeradar implements Tigeradar {
 
 	private HttpResponse doGet(URI uri) {
 
-		HttpResponse response = null;
+		CloseableHttpResponse response = null;
 		HttpGet httpGet = new HttpGet(uri);
+		CloseableHttpClient client = getHttpClient();
 
 		try {
-			response = getHttpClient().execute(httpGet);
+			response = client.execute(httpGet);
 		} catch (IOException e) {
 			logger.error("", e);
+		} finally {
+			try {
+				response.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// if(client != null) {
+			// client.close();
+			// }
 		}
 
 		return response;
 	}
 
-	private HttpResponse doPost(HttpPost post) {
+	private CloseableHttpResponse doPost(HttpPost post) {
 
-		HttpClient httpClient = getHttpClient();
-		HttpResponse response = null;
+		CloseableHttpClient httpClient = getHttpClient();
+		CloseableHttpResponse response = null;
 		HttpEntity entity = null;
 		try {
-			// 创建默认的httpClient实例.
-			httpClient = HttpClients.createDefault();
+
 			// post.setConfig(requestConfig);
 			// 执行请求
 			response = httpClient.execute(post);

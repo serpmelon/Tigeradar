@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
+
 
 /**
  * 
@@ -45,7 +47,9 @@ public interface Tigeradar {
 	 *         --------------------------------------------------------------<br>
 	 *         </p>
 	 */
-	HttpResponse post(String url);
+	CloseableHttpResponse post(String url);
 
-	HttpResponse post(String url, List<NameValuePair> params);
+	CloseableHttpResponse post(String url, List<NameValuePair> params);
+	
+	CloseableHttpResponse post(String url, Map<String, String> params);
 }
