@@ -7,7 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
-
 /**
  * 
  * <p>
@@ -26,8 +25,46 @@ import org.apache.http.client.methods.CloseableHttpResponse;
  */
 public interface Tigeradar {
 
+	/**
+	 * 
+	 * <p>
+	 * Method ：get
+	 * <p>
+	 * Description :get请求
+	 *
+	 * @param url
+	 *            请求的路径
+	 * @return
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年2月6日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
 	HttpResponse get(String url);
 
+	/**
+	 * 
+	 * <p>
+	 * Method ：get
+	 * <p>
+	 * Description :
+	 *
+	 * @param url
+	 *            请求路径
+	 * @param params
+	 *            请求参数
+	 * @return
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年2月6日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
 	HttpResponse get(String url, Map<String, String> params);
 
 	/**
@@ -49,7 +86,45 @@ public interface Tigeradar {
 	 */
 	CloseableHttpResponse post(String url);
 
+	/**
+	 * 
+	 * <p>
+	 * Method ：post
+	 * <p>
+	 * Description :看名字应该都懂
+	 *
+	 * @param url
+	 * @param params
+	 * @return
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年2月6日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
 	CloseableHttpResponse post(String url, List<NameValuePair> params);
-	
+
+	/**
+	 * 
+	 * <p>
+	 * Method ：post
+	 * <p>
+	 * Description :看名字应该都懂
+	 *
+	 * @param url
+	 * @param params
+	 * @return
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年2月6日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
 	CloseableHttpResponse post(String url, Map<String, String> params);
+
+	String test();
 }

@@ -21,6 +21,22 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * <p>
+ * Class : com.togo.tigeradar.AbstractTigeradar
+ * <p>
+ * Descdription: tigeradar的抽象实现类，基本实现了请求方法
+ *
+ * @author taiyn
+ * @version 1.0.0
+ *          <p>
+ *          --------------------------------------------------------------<br>
+ *          修改履历：<br>
+ *          <li>2019年2月7日，taiyn，创建文件；<br>
+ *          --------------------------------------------------------------<br>
+ *          </p>
+ */
 public abstract class AbstractTigeradar implements Tigeradar {
 
 	private Logger logger = LoggerFactory.getLogger(AbstractTigeradar.class);
