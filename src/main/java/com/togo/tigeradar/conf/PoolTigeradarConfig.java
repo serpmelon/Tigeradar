@@ -30,20 +30,29 @@ public class PoolTigeradarConfig {
 	private int maxTotal;
 	private int defaultMaxPreRoute;
 
+	/**
+	 * 连接池目标主机
+	 */
 	private String host;
+	/**
+	 * 连接池目标主机端口
+	 */
 	private int port;
 
-	private final static String POOL_CONFIG_FILE = "poolTigeradarConf.properties";
+	/**
+	 * 连接池配置文件名称
+	 */
+	private static final String POOL_CONFIG_FILE = "poolTigeradarConf.properties";
 
-	private final static String POOL_CONNECT_TIMEOUT = "httpclient.pool.connect-timeout";
-	private final static String POOL_CONNECT_REQUEST_TIMEOUT = "httpclient.pool.connection-request-timeout";
-	private final static String POOL_SOCKET_TIMEOUT = "httpclient.pool.socket-timeout";
-	private final static String POOL_EXPECT_CONTINUE_ENABLED = "httpclient.pool.expect-continue-enabled";
-	private final static String POOL_MAX_TOTAL = "httpclient.pool.max-total";
-	private final static String POOL_DEFAULT_MAX_PRE_ROUTE = "httpclient.pool.default-max-pre-route";
+	private static final String POOL_CONNECT_TIMEOUT = "httpclient.pool.connect-timeout";
+	private static final String POOL_CONNECT_REQUEST_TIMEOUT = "httpclient.pool.connection-request-timeout";
+	private static final String POOL_SOCKET_TIMEOUT = "httpclient.pool.socket-timeout";
+	private static final String POOL_EXPECT_CONTINUE_ENABLED = "httpclient.pool.expect-continue-enabled";
+	private static final String POOL_MAX_TOTAL = "httpclient.pool.max-total";
+	private static final String POOL_DEFAULT_MAX_PRE_ROUTE = "httpclient.pool.default-max-pre-route";
 
-	private final static String POOL_HOST = "httpclient.pool.host";
-	private final static String POOL_PORT = "httpclient.pool.port";
+	private static final String POOL_HOST = "httpclient.pool.host";
+	private static final String POOL_PORT = "httpclient.pool.port";
 
 	private PropertiesReader reader;
 
