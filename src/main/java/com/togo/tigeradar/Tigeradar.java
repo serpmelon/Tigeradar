@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.slf4j.Logger;
 
 /**
  * 
@@ -125,6 +126,8 @@ public interface Tigeradar {
 	 *         </p>
 	 */
 	CloseableHttpResponse post(String url, Map<String, String> params);
+
+	String state();
 
 	String test();
 }

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.togo.tigeradar.conf.PoolTigeradarConfig;
-import com.togo.tigeradar.conf.TigeradarRequestRetryHandler;
 
 @Component("poolTigeradar")
 public class PoolTigeradar extends AbstractTigeradar {
@@ -21,15 +20,18 @@ public class PoolTigeradar extends AbstractTigeradar {
 	private Logger logger = LoggerFactory.getLogger(PoolTigeradar.class);
 
 	private PoolTigeradar() {
-		System.out.println("pool");
 	}
 
 	private PoolingHttpClientConnectionManager pccm;
-	
+
+	@Autowired
+	private HttpRequestRetryHandler retryHandler;
+
 	private CloseableHttpClient client;
 	/**
 	 * 请求配置
 	 */
+	// TODO
 	private RequestConfig params;
 
 	@Autowired
@@ -46,12 +48,9 @@ public class PoolTigeradar extends AbstractTigeradar {
 		HttpHost httpHost = new HttpHost(host, port);
 		pccm.setMaxPerRoute(new HttpRoute(httpHost), poolConfig.getMaxTotal());
 
-		// 请求失败时,进行请求重试
-		HttpRequestRetryHandler handler = new TigeradarRequestRetryHandler();
-
 		CloseableHttpClient newClient = HttpClients.custom().setConnectionManager(pccm)
 				.setUserAgent("Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)")
-				.setRetryHandler(handler) // 重试策略
+				.setRetryHandler(retryHandler) // 重试策略
 				.setKeepAliveStrategy((response, context) -> 2 * 1000).build();
 
 		logger.info("pool state : {}", pccm.getTotalStats());
@@ -72,11 +71,20 @@ public class PoolTigeradar extends AbstractTigeradar {
 		return client;
 	}
 
-	public String pccm() {
-		
+	/**
+	 * 
+	 * <p>Method ：logState
+	 * <p>Description :这样好像不太好，等会改 
+	 *
+	 * @param logger 
+	 * @see com.togo.tigeradar.Tigeradar#logState(org.slf4j.Logger)
+	 */
+	@Override
+	public String state() {
+
 		return pccm.getTotalStats().toString();
 	}
-	
+
 	@Override
 	public String test() {
 		return pccm.getTotalStats().toString();
