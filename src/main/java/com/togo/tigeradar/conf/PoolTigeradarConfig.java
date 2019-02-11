@@ -1,5 +1,7 @@
 package com.togo.tigeradar.conf;
 
+import org.springframework.stereotype.Component;
+
 import com.togo.tigeradar.util.PropertiesReader;
 
 /**
@@ -18,9 +20,8 @@ import com.togo.tigeradar.util.PropertiesReader;
  *          --------------------------------------------------------------<br>
  *          </p>
  */
-public enum PoolTigeradarConfig {
-
-	INSTANCE;
+@Component
+public class PoolTigeradarConfig {
 
 	private int connectTimeout;
 	private int connectionRequestTimeout;
@@ -28,6 +29,9 @@ public enum PoolTigeradarConfig {
 	private boolean expectContinueEnabled;
 	private int maxTotal;
 	private int defaultMaxPreRoute;
+
+	private String host;
+	private int port;
 
 	private final static String POOL_CONFIG_FILE = "poolTigeradarConf.properties";
 
@@ -37,6 +41,9 @@ public enum PoolTigeradarConfig {
 	private final static String POOL_EXPECT_CONTINUE_ENABLED = "httpclient.pool.expect-continue-enabled";
 	private final static String POOL_MAX_TOTAL = "httpclient.pool.max-total";
 	private final static String POOL_DEFAULT_MAX_PRE_ROUTE = "httpclient.pool.default-max-pre-route";
+
+	private final static String POOL_HOST = "httpclient.pool.host";
+	private final static String POOL_PORT = "httpclient.pool.port";
 
 	private PropertiesReader reader;
 
@@ -50,6 +57,9 @@ public enum PoolTigeradarConfig {
 		expectContinueEnabled = reader.readBoolean(POOL_EXPECT_CONTINUE_ENABLED);
 		maxTotal = reader.readInt(POOL_MAX_TOTAL);
 		defaultMaxPreRoute = reader.readInt(POOL_DEFAULT_MAX_PRE_ROUTE);
+
+		host = reader.readString(POOL_HOST);
+		port = reader.readInt(POOL_PORT);
 	}
 
 	public int getConnectTimeout() {
@@ -80,4 +90,11 @@ public enum PoolTigeradarConfig {
 		return POOL_CONFIG_FILE;
 	}
 
+	public String getHost() {
+		return host;
+	}
+
+	public int getPort() {
+		return port;
+	}
 }
