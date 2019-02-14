@@ -19,9 +19,8 @@ public enum TigerBeanContext {
 		return ac.getBean(beanId);
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T> T getBean(String beanId, Class<T> klass) {
 
-		return (T) ac.getBean(beanId);
+		return ac.getBean(beanId, klass);
 	}
 }
