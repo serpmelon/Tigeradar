@@ -2,6 +2,7 @@ package com.togo.tigeradar;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.http.HttpResponse;
 import org.junit.Test;
 
 /**
@@ -17,7 +18,8 @@ public class DefaultTigeradarTest {
 		Tigeradar tigeradar = new DefaultTigeradar();
 
 		String url = "https://www.baidu.com";
-		assertEquals(300, tigeradar.get(url).getStatusLine().getStatusCode());
+		HttpResponse resp = tigeradar.get(url);
+		assertEquals(300, resp.getStatusLine().getStatusCode());
 //		System.out.println(tigeradar.get(url).getStatusLine().getStatusCode());
 	}
 }
