@@ -81,7 +81,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	}
 
 	@Override
-	public CloseableHttpResponse post(String url) {
+	public HttpResponse post(String url) {
 
 		HttpPost httpPost = new HttpPost(url);
 
@@ -89,7 +89,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	}
 
 	@Override
-	public CloseableHttpResponse post(String url, List<NameValuePair> params) {
+	public HttpResponse post(String url, List<NameValuePair> params) {
 		HttpPost httpPost = new HttpPost(url);// 创建httpPost
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
@@ -101,7 +101,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	}
 
 	@Override
-	public CloseableHttpResponse post(String url, Map<String, String> params) {
+	public HttpResponse post(String url, Map<String, String> params) {
 
 		// 创建参数队列
 		List<NameValuePair> nameValuePairs = new ArrayList<>();
@@ -125,45 +125,51 @@ public abstract class AbstractTigeradar implements Tigeradar {
 			logger.error("", e);
 		} finally {
 			try {
-				response.close();
+				if (response != null) {
+
+					response.close();
+				}
+
+				if (client != null) {
+
+					client.close();
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("", e);
 			}
-			// if(client != null) {
-			// client.close();
-			// }
 		}
 
 		return response;
 	}
 
-	private CloseableHttpResponse doPost(HttpPost post) {
+	private HttpResponse doPost(HttpPost post) {
 
-		CloseableHttpClient httpClient = getHttpClient();
+		CloseableHttpClient client = getHttpClient();
 		CloseableHttpResponse response = null;
 		HttpEntity entity = null;
 		try {
 
 			// post.setConfig(requestConfig);
 			// 执行请求
-			response = httpClient.execute(post);
+			response = client.execute(post);
 			entity = response.getEntity();
 			// responseContent = EntityUtils.toString(entity, "UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			// try {
-			// // 关闭连接,释放资源
-			// if (response != null) {
-			// response.close();
-			// }
-			// if (httpClient != null) {
-			// httpClient.close();
-			// }
-			// } catch (IOException e) {
-			// e.printStackTrace();
-			// }
+			try {
+				if (response != null) {
+
+					response.close();
+				}
+
+				if (client != null) {
+
+					client.close();
+				}
+			} catch (IOException e) {
+				logger.error("", e);
+			}
 		}
 		return response;
 	}
