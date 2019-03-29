@@ -1,5 +1,7 @@
 package com.togo.tigeradar;
 
+import java.io.IOException;
+
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -21,7 +23,22 @@ public class DefaultTigeradar extends AbstractTigeradar {
 
 	@Override
 	public String state() {
-		// TODO
 		return null;
+	}
+
+	@Override
+	protected void closeClient(CloseableHttpClient client) {
+		super.closeClient(client);
+
+		try {
+			if (client != null)
+				client.close();
+			else
+				throw new NullPointerException(
+						"CLIENT IS NULL WHEN LAUNCHED THE 'closeClient' METHOD");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

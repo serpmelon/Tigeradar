@@ -3,6 +3,8 @@ package com.togo.tigeradar;
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -60,6 +62,10 @@ public class PoolTigeradar extends AbstractTigeradar {
 
 	@Override
 	CloseableHttpClient getHttpClient() {
+
+		if (client != null)
+			return client;
+
 		synchronized (this) {
 			if (client == null) {
 
@@ -73,10 +79,12 @@ public class PoolTigeradar extends AbstractTigeradar {
 
 	/**
 	 * 
-	 * <p>Method ：logState
-	 * <p>Description :这样好像不太好，等会改 
+	 * <p>
+	 * Method ：logState
+	 * <p>
+	 * Description :这样好像不太好，等会改
 	 *
-	 * @param logger 
+	 * @param logger
 	 * @see com.togo.tigeradar.Tigeradar#logState(org.slf4j.Logger)
 	 */
 	@Override
@@ -89,4 +97,14 @@ public class PoolTigeradar extends AbstractTigeradar {
 	public String test() {
 		return pccm.getTotalStats().toString();
 	}
+
+	@Override
+	protected void closeMethod(HttpRequestBase method) {
+		super.closeMethod(method);
+		if (method != null)
+			method.releaseConnection();
+		else
+			throw new NullPointerException(method.getMethod() + " methodd is null");
+	}
+
 }

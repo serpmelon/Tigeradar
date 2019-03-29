@@ -16,6 +16,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -136,12 +137,13 @@ public abstract class AbstractTigeradar implements Tigeradar {
 				if (response != null) {
 
 					response.close();
+					httpGet.releaseConnection();
 				}
 
-				if (client != null) {
-
-					client.close();
-				}
+				// if (client != null) {
+				//
+				// client.close();
+				// }
 			} catch (IOException e) {
 				logger.error("", e);
 			}
@@ -180,6 +182,33 @@ public abstract class AbstractTigeradar implements Tigeradar {
 			}
 		}
 		return response;
+	}
+
+	@Override
+	public void close(CloseableHttpResponse response, CloseableHttpClient client,
+			HttpRequestBase method) {
+
+		closeResponse(response);
+		closeClient(client);
+		closeMethod(method);
+	}
+
+	protected void closeResponse(CloseableHttpResponse response) {
+
+		try {
+			if (response != null)
+				response.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void closeClient(CloseableHttpClient client) {
+
+	}
+
+	protected void closeMethod(HttpRequestBase method) {
+
 	}
 
 	/**

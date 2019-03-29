@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * 
@@ -124,6 +127,26 @@ public interface Tigeradar {
 	 *         </p>
 	 */
 	HttpResponse post(String url, Map<String, String> params);
+
+	/**
+	 * 
+	 * <p>
+	 * Method ：close
+	 * <p>
+	 * Description :关闭资源方法
+	 *
+	 * @param response
+	 * @param client
+	 * @param method
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年3月29日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
+	void close(CloseableHttpResponse response, CloseableHttpClient client, HttpRequestBase method);
 
 	String state();
 
