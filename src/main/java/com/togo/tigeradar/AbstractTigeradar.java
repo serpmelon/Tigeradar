@@ -133,20 +133,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 		} catch (IOException e) {
 			logger.error("", e);
 		} finally {
-			try {
-				if (response != null) {
-
-					response.close();
-					httpGet.releaseConnection();
-				}
-
-				// if (client != null) {
-				//
-				// client.close();
-				// }
-			} catch (IOException e) {
-				logger.error("", e);
-			}
+			close(response, client, httpGet);
 		}
 
 		return response;
@@ -167,19 +154,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (response != null) {
-
-					response.close();
-				}
-
-				if (client != null) {
-
-					client.close();
-				}
-			} catch (IOException e) {
-				logger.error("", e);
-			}
+			close(response, client, post);
 		}
 		return response;
 	}
@@ -195,12 +170,12 @@ public abstract class AbstractTigeradar implements Tigeradar {
 
 	protected void closeResponse(CloseableHttpResponse response) {
 
-		try {
-			if (response != null)
-				response.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+////			if (response != null)
+////				response.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	protected void closeClient(CloseableHttpClient client) {
