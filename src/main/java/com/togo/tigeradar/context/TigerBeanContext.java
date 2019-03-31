@@ -12,6 +12,8 @@ public enum TigerBeanContext {
 	private TigerBeanContext() {
 
 		ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		if (ac == null)
+			throw new NullPointerException("ac is null");
 	}
 
 	public Object getBean(String beanId) {
