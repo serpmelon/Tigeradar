@@ -19,7 +19,7 @@ public class DefaultTigeradarTest {
 
 		String url = "https://www.baidu.com";
 		HttpResponse resp = tigeradar.get(url);
-		assertEquals(300, resp.getStatusLine().getStatusCode());
+		assertEquals(200, resp.getStatusLine().getStatusCode());
 //		System.out.println(tigeradar.get(url).getStatusLine().getStatusCode());
 	}
 }
