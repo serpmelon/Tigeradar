@@ -1,5 +1,7 @@
 package com.togo.tigeradar;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -49,6 +51,7 @@ public class PoolTigeradar extends AbstractTigeradar {
 
 		HttpHost httpHost = new HttpHost(host, port);
 		pccm.setMaxPerRoute(new HttpRoute(httpHost), poolConfig.getMaxTotal());
+		pccm.closeIdleConnections(10, TimeUnit.SECONDS);
 
 		CloseableHttpClient newClient = HttpClients.custom().setConnectionManager(pccm)
 				.setUserAgent("Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)")
