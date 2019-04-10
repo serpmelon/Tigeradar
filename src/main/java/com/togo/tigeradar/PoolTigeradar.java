@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.togo.tigeradar.conf.PoolTigeradarConfig;
 
+
 @Component("poolTigeradar")
 public class PoolTigeradar extends AbstractTigeradar {
 
