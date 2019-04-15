@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 @Component("defaultTigeradar")
 public class DefaultTigeradar extends AbstractTigeradar {
 
+	private DefaultTigeradar() {
+	}
+
 	@Override
 	CloseableHttpClient getHttpClient() {
 
