@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.togo.tigeradar.conf.PoolTigeradarConfig;
-
 
 @Component("poolTigeradar")
 public class PoolTigeradar extends AbstractTigeradar {
@@ -108,7 +106,7 @@ public class PoolTigeradar extends AbstractTigeradar {
 		if (method != null)
 			method.releaseConnection();
 		else
-			throw new NullPointerException(method.getMethod() + " methodd is null");
+			throw new NullPointerException(method + " methodd is null");
 	}
 
 }

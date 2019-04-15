@@ -20,6 +20,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +55,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	@Override
 	public HttpResponse get(String url) {
 
+		// TODO 日志AOP功能
 		HttpResponse response = null;
 		URIBuilder uriBuilder;
 		try {
@@ -143,20 +145,68 @@ public abstract class AbstractTigeradar implements Tigeradar {
 
 		CloseableHttpClient client = getHttpClient();
 		CloseableHttpResponse response = null;
-		HttpEntity entity = null;
 		try {
-
 			post.setConfig(requestConfig);
 			// 执行请求
 			response = client.execute(post);
-			entity = response.getEntity();
-			// responseContent = EntityUtils.toString(entity, "UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(response, client, post);
 		}
 		return response;
+	}
+
+	private String doPostAndReturnString(HttpPost post) {
+
+		CloseableHttpClient client = getHttpClient();
+		CloseableHttpResponse response = null;
+		HttpEntity entity = null;
+		String responseContent = null;
+		try {
+
+			post.setConfig(requestConfig);
+			// 执行请求
+			response = client.execute(post);
+			entity = response.getEntity();
+			responseContent = EntityUtils.toString(entity, "UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(response, client, post);
+		}
+		return responseContent;
+	}
+
+	@Override
+	public String postAndReturnString(String url) {
+		HttpPost httpPost = new HttpPost(url);
+
+		return doPostAndReturnString(httpPost);
+	}
+
+	@Override
+	public String postAndReturnString(String url, List<NameValuePair> params) {
+		HttpPost httpPost = new HttpPost(url);// 创建httpPost
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+		} catch (Exception e) {
+			logger.error("", e);
+		}
+
+		return doPostAndReturnString(httpPost);
+	}
+
+	@Override
+	public String postAndReturnString(String url, Map<String, String> params) {
+		// 创建参数队列
+		List<NameValuePair> nameValuePairs = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+		}
+
+		return postAndReturnString(url, nameValuePairs);
 	}
 
 	@Override
@@ -170,12 +220,12 @@ public abstract class AbstractTigeradar implements Tigeradar {
 
 	protected void closeResponse(CloseableHttpResponse response) {
 
-//		try {
-////			if (response != null)
-////				response.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		//// if (response != null)
+		//// response.close();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	protected void closeClient(CloseableHttpClient client) {
@@ -203,6 +253,7 @@ public abstract class AbstractTigeradar implements Tigeradar {
 	 */
 	private static void initializeRequestConfig() {
 
+		// TODO 后面增加从配置文件读取功能
 		requestConfig = RequestConfig.custom() // RequestConfigBuilder
 				.setConnectionRequestTimeout(60000) //
 				.setConnectTimeout(60000) //

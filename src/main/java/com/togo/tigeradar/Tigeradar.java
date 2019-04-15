@@ -91,6 +91,25 @@ public interface Tigeradar {
 	/**
 	 * 
 	 * <p>
+	 * Method ：postAndReturnString
+	 * <p>
+	 * Description :发送post获取字符串返回结果
+	 *
+	 * @param url
+	 * @return
+	 * @author taiyn
+	 *         <p>
+	 *         --------------------------------------------------------------<br>
+	 *         修改履历：<br>
+	 *         <li>2019年4月15日，taiyn，创建方法；<br>
+	 *         --------------------------------------------------------------<br>
+	 *         </p>
+	 */
+	String postAndReturnString(String url);
+
+	/**
+	 * 
+	 * <p>
 	 * Method ：post
 	 * <p>
 	 * Description :看名字应该都懂
@@ -107,6 +126,8 @@ public interface Tigeradar {
 	 *         </p>
 	 */
 	HttpResponse post(String url, List<NameValuePair> params);
+
+	String postAndReturnString(String url, List<NameValuePair> params);
 
 	/**
 	 * 
@@ -127,6 +148,8 @@ public interface Tigeradar {
 	 *         </p>
 	 */
 	HttpResponse post(String url, Map<String, String> params);
+
+	String postAndReturnString(String url, Map<String, String> params);
 
 	/**
 	 * 
