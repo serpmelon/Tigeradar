@@ -18,18 +18,6 @@ package com.togo.tigeradar.constant;
  */
 public enum TigeradarType {
 
-	DEFAULT("defaultTigeradar"), // 默认http请求实现
-	POOL("poolTigeradar"); // 连接池http请求实现
-
-	private String beanId;
-
-	private TigeradarType(String id) {
-
-		this.beanId = id;
-	}
-
-	public String getType() {
-
-		return beanId;
-	}
+	DEFAULT, // 默认http请求实现
+	POOL; // 连接池http请求实现
 }
