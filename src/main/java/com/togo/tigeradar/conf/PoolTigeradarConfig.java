@@ -24,7 +24,6 @@ import com.togo.tigeradar.util.PropertiesReader;
 @Component
 public class PoolTigeradarConfig {
 
-	@Value("${tiger.pool.connect-timeout}")
 	private int connectTimeout;
 	private int connectionRequestTimeout;
 	private int socketTimeout;
@@ -62,9 +61,7 @@ public class PoolTigeradarConfig {
 
 		reader = new PropertiesReader(POOL_CONFIG_FILE);
 
-		if (connectTimeout == 0)
-			connectTimeout = reader.readInt(POOL_CONNECT_TIMEOUT);
-		System.out.println("connectTimeout" + connectTimeout);
+		connectTimeout = reader.readInt(POOL_CONNECT_TIMEOUT);
 		connectionRequestTimeout = reader.readInt(POOL_CONNECT_REQUEST_TIMEOUT);
 		socketTimeout = reader.readInt(POOL_SOCKET_TIMEOUT);
 		expectContinueEnabled = reader.readBoolean(POOL_EXPECT_CONTINUE_ENABLED);

@@ -3,6 +3,10 @@ package com.togo.tigeradar.context;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.togo.tigeradar.constant.TigeradarType;
+import com.togo.tigeradar.constant.TigeradarTypeList;
+import com.togo.tigeradar.constant.entity.TigeradarInfo;
+
 public enum TigerBeanContext {
 
 	INSTANCE;
@@ -12,8 +16,6 @@ public enum TigerBeanContext {
 	private TigerBeanContext() {
 
 		ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-		if (ac == null)
-			throw new NullPointerException("ac is null");
 	}
 
 	public Object getBean(String beanId) {
@@ -24,5 +26,13 @@ public enum TigerBeanContext {
 	public <T> T getBean(String beanId, Class<T> klass) {
 
 		return ac.getBean(beanId, klass);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getBean(TigeradarType type) {
+
+		TigeradarInfo info = TigeradarTypeList.getClass(type);
+
+		return (T) getBean(info.getBeanId(), info.getKlass());
 	}
 }
