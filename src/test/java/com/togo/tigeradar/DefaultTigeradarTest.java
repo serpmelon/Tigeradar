@@ -16,7 +16,7 @@ public class DefaultTigeradarTest {
 	@Test
 	public void testGet() {
 
-		System.setProperty("log.base", "C:/Users/Administrator/Desktop");
+		System.setProperty("log.base", "C:/Users/AI/Desktop");
 
 		Tigeradar tigeradar = TigerBeanContext.INSTANCE.getBean(TigeradarType.DEFAULT);
 

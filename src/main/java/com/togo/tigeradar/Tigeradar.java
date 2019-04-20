@@ -127,6 +127,19 @@ public interface Tigeradar {
 	 */
 	HttpResponse post(String url, List<NameValuePair> params);
 
+	/**
+	 * 
+	 * @author AI
+	 * @desc post请求，以字符串的形式返回响应体
+	 * 
+	 * @param url
+	 *            请求地址
+	 * @param params
+	 *            请求参数
+	 * @return
+	 *
+	 * @date 2019年4月20日
+	 */
 	String postAndReturnString(String url, List<NameValuePair> params);
 
 	/**
@@ -149,6 +162,17 @@ public interface Tigeradar {
 	 */
 	HttpResponse post(String url, Map<String, String> params);
 
+	/**
+	 * 
+	 * @author AI
+	 * @desc 
+	 * 
+	 * @param url
+	 * @param params
+	 * @return
+	 *
+	 * @date 2019年4月20日
+	 */
 	String postAndReturnString(String url, Map<String, String> params);
 
 	/**
